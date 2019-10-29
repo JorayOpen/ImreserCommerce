@@ -5,7 +5,9 @@ url:
   prefixes:
     en: en
     es: es
+    zh: zh
   domains:
     en: ''
     es: ''
+    zh: ''
 selected_langcode: site_default

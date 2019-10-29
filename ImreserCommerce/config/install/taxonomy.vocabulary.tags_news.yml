@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Tags News'
+vid: tags_news
+description: 'Use tags to group news on similar topics into categories.'
+hierarchy: 0
+weight: 4

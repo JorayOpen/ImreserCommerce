@@ -1,0 +1,13 @@
+id,title,body,author,slug,image,alt,tags_announcement
+1,announcement1,announcement1.html,Holly Foat,announcement/announcement1,announcement1.jpg,announcement1,"1,2,3"
+2,announcement2,announcement2.html,Holly Foat,announcement/announcement2,announcement2.jpg,announcement2,"1,2,3"
+3,announcement3,announcement3.html,Holly Foat,announcement/announcement3,announcement3.jpg,announcement3,"1,2,3"
+4,announcement4,announcement4.html,Holly Foat,announcement/announcement4,announcement4.jpg,announcement4,"1,2,3"
+5,announcement5,announcement5.html,Holly Foat,announcement/announcement5,announcement5.jpg,announcement5,"1,2,3"
+6,announcement6,announcement6.html,Holly Foat,announcement/announcement6,announcement6.jpg,announcement6,"2,3,4"
+7,announcement7,announcement7.html,Holly Foat,announcement/announcement7,announcement7.jpg,announcement7,"2,3,4"
+8,announcement8,announcement8.html,Holly Foat,announcement/announcement8,announcement8.jpg,announcement8,"2,3,4"
+9,announcement9,announcement9.html,Holly Foat,announcement/announcement9,announcement9.jpg,announcement9,"2,3,4"
+10,announcement10,announcement10.html,Holly Foat,announcement/announcement10,announcement10.jpg,announcement10,"2,3,4"
+11,announcement11,announcement11.html,Holly Foat,announcement/announcement11,announcement11.jpg,announcement11,"2,3,4"
+12,announcement12,announcement12.html,Holly Foat,announcement/announcement12,announcement12.jpg,announcement12,"2,3,4"

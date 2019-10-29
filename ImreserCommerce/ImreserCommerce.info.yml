@@ -1,15 +1,8 @@
-name: 'ImreserCommerce'
+name: 'Demo: Umami Food Magazine (Experimental)'
 type: profile
-description: 'Install a website to demonstrate the features of Drupal’s online commerce and physical stores.'
+description: 'Install an example site that shows off some of Drupal’s capabilities.'
+# version: VERSION
 core: 8.x
-
-# Optional: Declare your installation profile as a distribution
-# This will make the installer auto-select this installation profile.
-# The distribution_name property is used in the installer and other places as
-# a label for the software being installed.
-distribution:
-  name: 'Imreser Commerce'
-
 install:
   - node
   - history
@@ -21,7 +14,6 @@ install:
   - config
   - contextual
   - contact
-  - comment
   - layout_builder
   - layout_discovery
   - menu_link_content
@@ -56,12 +48,13 @@ install:
   - locale
   - config_translation
   - content_translation
+  - demo_umami_tour
 themes:
   - seven
   - umami
-  - bartik
-#keep_english: true
-# Information added by Drupal.org packaging script on 2019-09-04
-version: '8.7.7'
+keep_english: true
+
+# Information added by Drupal.org packaging script on 2019-10-02
+version: '8.7.8'
 project: 'drupal'
-datestamp: 1567593218
+datestamp: 1570044520

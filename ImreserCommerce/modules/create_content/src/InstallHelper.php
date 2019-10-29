@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\create_content;
+namespace Drupal\demo_umami_content;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Defines a helper class for importing default content.
  *
  * @internal
- *   This code is only for use by the ImreserCommerce demo: Content module.
+ *   This code is only for use by the Umami demo: Content module.
  */
 class InstallHelper implements ContainerInjectionInterface {
 
@@ -134,18 +134,10 @@ class InstallHelper implements ContainerInjectionInterface {
     $this->getModulePath()
       ->importEditors()
       ->importContentFromFile('taxonomy_term', 'tags')
-      ->importContentFromFile('taxonomy_term', 'tags_recipe')
-      ->importContentFromFile('taxonomy_term', 'tags_product')
-      ->importContentFromFile('taxonomy_term', 'tags_news')
-      ->importContentFromFile('taxonomy_term', 'tags_case')
-      ->importContentFromFile('taxonomy_term', 'tags_announcement')
-      ->importContentFromFile('node', 'article')
+      ->importContentFromFile('taxonomy_term', 'recipe_category')
       ->importContentFromFile('node', 'recipe')
+      ->importContentFromFile('node', 'article')
       ->importContentFromFile('node', 'page')
-      ->importContentFromFile('node', 'product')
-      ->importContentFromFile('node', 'news')
-      ->importContentFromFile('node', 'case')
-      ->importContentFromFile('node', 'announcement')
       ->importContentFromFile('block_content', 'disclaimer_block')
       ->importContentFromFile('block_content', 'footer_promo_block')
       ->importContentFromFile('block_content', 'banner_block');
@@ -157,7 +149,7 @@ class InstallHelper implements ContainerInjectionInterface {
    * @return $this
    */
   protected function getModulePath() {
-    $this->module_path = $this->moduleHandler->getModule('create_content')->getPath();
+    $this->module_path = $this->moduleHandler->getModule('demo_umami_content')->getPath();
     return $this;
   }
 
@@ -173,15 +165,15 @@ class InstallHelper implements ContainerInjectionInterface {
    *     2. List of language codes that need to be imported.
    */
   protected function readMultilingualContent($filename) {
-    $create_content_path = $this->module_path . "/create_content/languages/";
+    $default_content_path = $this->module_path . "/default_content/languages/";
 
     // Get all enabled languages.
     $translated_languages = $this->enabledLanguages;
 
     // Load all the content from any CSV files that exist for enabled languages.
     foreach ($translated_languages as $language) {
-      if (file_exists($create_content_path . "$language/$filename") &&
-      ($handle = fopen($create_content_path . "$language/$filename", 'r')) !== FALSE) {
+      if (file_exists($default_content_path . "$language/$filename") &&
+      ($handle = fopen($default_content_path . "$language/$filename", 'r')) !== FALSE) {
         $header = fgetcsv($handle);
         $line_counter = 0;
         while (($content = fgetcsv($handle)) !== FALSE) {
@@ -390,7 +382,7 @@ class InstallHelper implements ContainerInjectionInterface {
 
     // Set field_image field.
     if (!empty($data['image'])) {
-      $image_path = $this->module_path . '/create_content/images/' . $data['image'];
+      $image_path = $this->module_path . '/default_content/images/' . $data['image'];
       $values['field_image'] = [
         'target_id' => $this->createFileEntity($image_path),
         'alt' => $data['alt'],
@@ -400,13 +392,13 @@ class InstallHelper implements ContainerInjectionInterface {
     if (!empty($data['summary'])) {
       $values['field_summary'] = [['value' => $data['summary'], 'format' => 'basic_html']];
     }
-    // Set field_tags_recipe if exists.
-    if (!empty($data['tags_recipe'])) {
-      $values['field_tags_recipe'] = [];
-      $tags = array_filter(explode(',', $data['tags_recipe']));
+    // Set field_recipe_category if exists.
+    if (!empty($data['recipe_category'])) {
+      $values['field_recipe_category'] = [];
+      $tags = array_filter(explode(',', $data['recipe_category']));
       foreach ($tags as $tag_id) {
-        if ($tid = $this->getTermId('tags_recipe', $tag_id)) {
-          $values['field_tags_recipe'][] = ['target_id' => $tid];
+        if ($tid = $this->getTermId('recipe_category', $tag_id)) {
+          $values['field_recipe_category'][] = ['target_id' => $tid];
         }
       }
     }
@@ -434,12 +426,12 @@ class InstallHelper implements ContainerInjectionInterface {
         $values['field_ingredients'][] = ['value' => $ingredient];
       }
     }
-    // Set field_body_recipe field.
-    if (!empty($data['body_recipe'])) {
-      $body_recipe_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_recipes/' . $data['body_recipe'];
-      $body_recipes = file_get_contents($body_recipe_path);
-      if ($body_recipes !== FALSE) {
-        $values['field_body_recipe'] = [['value' => $body_recipes, 'format' => 'basic_html']];
+    // Set field_recipe_instruction field.
+    if (!empty($data['recipe_instruction'])) {
+      $recipe_instruction_path = $this->module_path . '/default_content/languages/' . $langcode . '/recipe_instructions/' . $data['recipe_instruction'];
+      $recipe_instructions = file_get_contents($recipe_instruction_path);
+      if ($recipe_instructions !== FALSE) {
+        $values['field_recipe_instruction'] = [['value' => $recipe_instructions, 'format' => 'basic_html']];
       }
     }
     // Set field_tags if exists.
@@ -477,7 +469,7 @@ class InstallHelper implements ContainerInjectionInterface {
     // Fields mapping starts.
     // Set body field.
     if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_article/' . $data['body'];
+      $body_path = $this->module_path . '/default_content/languages/' . $langcode . '/article_body/' . $data['body'];
       $body = file_get_contents($body_path);
       if ($body !== FALSE) {
         $values['body'] = [['value' => $body, 'format' => 'basic_html']];
@@ -496,7 +488,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set Image field.
     if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
+      $path = $this->module_path . '/default_content/images/' . $data['image'];
       $values['field_image'] = [
         'target_id' => $this->createFileEntity($path),
         'alt' => $data['alt'],
@@ -509,247 +501,6 @@ class InstallHelper implements ContainerInjectionInterface {
       foreach ($tags as $tag_id) {
         if ($tid = $this->getTermId('tags', $tag_id)) {
           $values['field_tags'][] = ['target_id' => $tid];
-        }
-      }
-    }
-    return $values;
-  }
-
-  /**
-   * Process product data into product node structure.
-   *
-   * @param array $data
-   *   Data of line that was read from the file.
-   * @param string $langcode
-   *   Current language code.
-   *
-   * @return array
-   *   Data structured as an product node.
-   */
-  protected function processProduct(array $data, $langcode) {
-    // Prepare content.
-    $values = [
-      'type' => 'product',
-      'title' => $data['title'],
-      'moderation_state' => 'published',
-      'langcode' => 'en',
-    ];
-    // Fields mapping starts.
-    // Set body field.
-    if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_product/' . $data['body'];
-      $body = file_get_contents($body_path);
-      if ($body !== FALSE) {
-        $values['body'] = [['value' => $body, 'format' => 'basic_html']];
-      }
-    }
-
-    // Set node alias if exists.
-    if (!empty($data['slug'])) {
-      $values['path'] = [['alias' => '/' . $data['slug']]];
-    }
-    // Save node alias
-    $this->saveNodePath($langcode, 'product', $data['id'], $data['slug']);
-    // Set product author.
-    if (!empty($data['author'])) {
-      $values['uid'] = $this->getUser($data['author']);
-    }
-    // Set Image field.
-    if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
-      $values['field_image'] = [
-        'target_id' => $this->createFileEntity($path),
-        'alt' => $data['alt'],
-      ];
-    }
-    // Set field_tags_product if exists.
-    if (!empty($data['tags_product'])) {
-      $values['field_tags_product'] = [];
-      $tags = array_filter(explode(',', $data['tags_product']));
-      foreach ($tags as $tag_id) {
-        if ($tid = $this->getTermId('tags_product', $tag_id)) {
-          $values['field_tags_product'][] = ['target_id' => $tid];
-        }
-      }
-    }
-    return $values;
-  }
-
-  /**
-   * Process news data into news node structure.
-   *
-   * @param array $data
-   *   Data of line that was read from the file.
-   * @param string $langcode
-   *   Current language code.
-   *
-   * @return array
-   *   Data structured as an news node.
-   */
-  protected function processNews(array $data, $langcode) {
-    // Prepare content.
-    $values = [
-      'type' => 'news',
-      'title' => $data['title'],
-      'moderation_state' => 'published',
-      'langcode' => 'en',
-    ];
-    // Fields mapping starts.
-    // Set body field.
-    if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_news/' . $data['body'];
-      $body = file_get_contents($body_path);
-      if ($body !== FALSE) {
-        $values['body'] = [['value' => $body, 'format' => 'basic_html']];
-      }
-    }
-
-    // Set node alias if exists.
-    if (!empty($data['slug'])) {
-      $values['path'] = [['alias' => '/' . $data['slug']]];
-    }
-    // Save node alias
-    $this->saveNodePath($langcode, 'news', $data['id'], $data['slug']);
-    // Set news author.
-    if (!empty($data['author'])) {
-      $values['uid'] = $this->getUser($data['author']);
-    }
-    // Set Image field.
-    if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
-      $values['field_image'] = [
-        'target_id' => $this->createFileEntity($path),
-        'alt' => $data['alt'],
-      ];
-    }
-    // Set field_tags_news if exists.
-    if (!empty($data['tags_news'])) {
-      $values['field_tags_news'] = [];
-      $tags = array_filter(explode(',', $data['tags_news']));
-      foreach ($tags as $tag_id) {
-        if ($tid = $this->getTermId('tags_news', $tag_id)) {
-          $values['field_tags_news'][] = ['target_id' => $tid];
-        }
-      }
-    }
-    return $values;
-  }
-
-  /**
-   * Process case data into case node structure.
-   *
-   * @param array $data
-   *   Data of line that was read from the file.
-   * @param string $langcode
-   *   Current language code.
-   *
-   * @return array
-   *   Data structured as an case node.
-   */
-  protected function processCase(array $data, $langcode) {
-    // Prepare content.
-    $values = [
-      'type' => 'case',
-      'title' => $data['title'],
-      'moderation_state' => 'published',
-      'langcode' => 'en',
-    ];
-    // Fields mapping starts.
-    // Set body field.
-    if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_case/' . $data['body'];
-      $body = file_get_contents($body_path);
-      if ($body !== FALSE) {
-        $values['body'] = [['value' => $body, 'format' => 'basic_html']];
-      }
-    }
-
-    // Set node alias if exists.
-    if (!empty($data['slug'])) {
-      $values['path'] = [['alias' => '/' . $data['slug']]];
-    }
-    // Save node alias
-    $this->saveNodePath($langcode, 'case', $data['id'], $data['slug']);
-    // Set case author.
-    if (!empty($data['author'])) {
-      $values['uid'] = $this->getUser($data['author']);
-    }
-    // Set Image field.
-    if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
-      $values['field_image'] = [
-        'target_id' => $this->createFileEntity($path),
-        'alt' => $data['alt'],
-      ];
-    }
-    // Set field_tags_case if exists.
-    if (!empty($data['tags_case'])) {
-      $values['field_tags_case'] = [];
-      $tags = array_filter(explode(',', $data['tags_case']));
-      foreach ($tags as $tag_id) {
-        if ($tid = $this->getTermId('tags_case', $tag_id)) {
-          $values['field_tags_case'][] = ['target_id' => $tid];
-        }
-      }
-    }
-    return $values;
-  }
-
-
-  /**
-   * Process announcement data into announcement node structure.
-   *
-   * @param array $data
-   *   Data of line that was read from the file.
-   * @param string $langcode
-   *   Current language code.
-   *
-   * @return array
-   *   Data structured as an announcement node.
-   */
-  protected function processAnnouncement(array $data, $langcode) {
-    // Prepare content.
-    $values = [
-      'type' => 'announcement',
-      'title' => $data['title'],
-      'moderation_state' => 'published',
-      'langcode' => 'en',
-    ];
-    // Fields mapping starts.
-    // Set body field.
-    if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_announcement/' . $data['body'];
-      $body = file_get_contents($body_path);
-      if ($body !== FALSE) {
-        $values['body'] = [['value' => $body, 'format' => 'basic_html']];
-      }
-    }
-
-    // Set node alias if exists.
-    if (!empty($data['slug'])) {
-      $values['path'] = [['alias' => '/' . $data['slug']]];
-    }
-    // Save node alias
-    $this->saveNodePath($langcode, 'announcement', $data['id'], $data['slug']);
-    // Set announcement author.
-    if (!empty($data['author'])) {
-      $values['uid'] = $this->getUser($data['author']);
-    }
-    // Set Image field.
-    if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
-      $values['field_image'] = [
-        'target_id' => $this->createFileEntity($path),
-        'alt' => $data['alt'],
-      ];
-    }
-    // Set field_tags_announcement if exists.
-    if (!empty($data['tags_announcement'])) {
-      $values['field_tags_announcement'] = [];
-      $tags = array_filter(explode(',', $data['tags_announcement']));
-      foreach ($tags as $tag_id) {
-        if ($tid = $this->getTermId('tags_announcement', $tag_id)) {
-          $values['field_tags_announcement'][] = ['target_id' => $tid];
         }
       }
     }
@@ -785,7 +536,7 @@ class InstallHelper implements ContainerInjectionInterface {
         'value' => $data['field_summary'],
       ],
       'field_banner_image' => [
-        'target_id' => $this->createFileEntity($this->module_path . '/create_content/images/' . $data['field_banner_image_target_id']),
+        'target_id' => $this->createFileEntity($this->module_path . '/default_content/images/' . $data['field_banner_image_target_id']),
         'alt' => $data['field_banner_image_alt'],
       ],
     ];
@@ -848,7 +599,7 @@ class InstallHelper implements ContainerInjectionInterface {
         'value' => $data['field_summary'],
       ],
       'field_promo_image' => [
-        'target_id' => $this->createFileEntity($this->module_path . '/create_content/images/' . $data['field_promo_image_target_id']),
+        'target_id' => $this->createFileEntity($this->module_path . '/default_content/images/' . $data['field_promo_image_target_id']),
         'alt' => $data['field_promo_image_alt'],
       ],
     ];
@@ -879,18 +630,6 @@ class InstallHelper implements ContainerInjectionInterface {
       case 'page':
         $structured_content = $this->processPage($content, $langcode);
         break;
-      case 'product':
-        $structured_content = $this->processProduct($content, $langcode);
-        break;
-      case 'news':
-        $structured_content = $this->processNews($content, $langcode);
-        break;
-      case 'case':
-        $structured_content = $this->processCase($content, $langcode);
-        break;
-      case 'announcement':
-        $structured_content = $this->processAnnouncement($content, $langcode);
-        break;
       case 'banner_block':
         $structured_content = $this->processBannerBlock($content, $langcode);
         break;
@@ -900,12 +639,8 @@ class InstallHelper implements ContainerInjectionInterface {
       case 'footer_promo_block':
         $structured_content = $this->processFooterPromoBlock($content, $langcode);
         break;
+      case 'recipe_category':
       case 'tags':
-      case 'tags_recipe':
-      case 'tags_news':
-      case 'tags_case':
-      case 'tags_announcement':
-      case 'tags_product':
         $structured_content = $this->processTerm($content, $bundle_machine_name);
         break;
       default:
@@ -980,7 +715,7 @@ class InstallHelper implements ContainerInjectionInterface {
    * @return $this
    */
   public function deleteImportedContent() {
-    $uuids = $this->state->get('create_content_uuids', []);
+    $uuids = $this->state->get('demo_umami_content_uuids', []);
     $by_entity_type = array_reduce(array_keys($uuids), function ($carry, $uuid) use ($uuids) {
       $entity_type_id = $uuids[$uuid];
       $carry[$entity_type_id][] = $uuid;
@@ -1057,8 +792,8 @@ class InstallHelper implements ContainerInjectionInterface {
    *   type.
    */
   protected function storeCreatedContentUuids(array $uuids) {
-    $uuids = $this->state->get('create_content_uuids', []) + $uuids;
-    $this->state->set('create_content_uuids', $uuids);
+    $uuids = $this->state->get('demo_umami_content_uuids', []) + $uuids;
+    $this->state->set('demo_umami_content_uuids', $uuids);
   }
 
 }

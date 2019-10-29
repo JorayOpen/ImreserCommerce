@@ -4,7 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.card_common
     - core.entity_view_mode.node.rss
-    - node.type.product
+    - node.type.recipe
   module:
     - node
     - user
@@ -170,7 +170,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            product: product
+            recipe: recipe
           group: 1
           exposed: false
           expose:
@@ -282,7 +282,7 @@ display:
           empty: false
           tokenize: false
           content:
-            value: '<h2 class="text-align-center">Explore products across every type of occasion, ingredient, and skill level.</h2>'
+            value: '<h2 class="text-align-center">Explore recipes across every type of occasion, ingredient, and skill level.</h2>'
             format: full_html
           plugin_id: text
       footer: {  }

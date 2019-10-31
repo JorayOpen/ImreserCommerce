@@ -134,7 +134,7 @@ class InstallHelper implements ContainerInjectionInterface {
     $this->getModulePath()
       ->importEditors()
       ->importContentFromFile('taxonomy_term', 'tags')
-      ->importContentFromFile('taxonomy_term', 'tags_recipe')
+      ->importContentFromFile('taxonomy_term', 'recipe_category')
       ->importContentFromFile('taxonomy_term', 'tags_product')
       ->importContentFromFile('taxonomy_term', 'tags_news')
       ->importContentFromFile('taxonomy_term', 'tags_case')
@@ -400,13 +400,13 @@ class InstallHelper implements ContainerInjectionInterface {
     if (!empty($data['summary'])) {
       $values['field_summary'] = [['value' => $data['summary'], 'format' => 'basic_html']];
     }
-    // Set field_tags_recipe if exists.
-    if (!empty($data['tags_recipe'])) {
-      $values['field_tags_recipe'] = [];
-      $tags = array_filter(explode(',', $data['tags_recipe']));
+    // Set field_recipe_category if exists.
+    if (!empty($data['recipe_category'])) {
+      $values['field_recipe_category'] = [];
+      $tags = array_filter(explode(',', $data['recipe_category']));
       foreach ($tags as $tag_id) {
-        if ($tid = $this->getTermId('tags_recipe', $tag_id)) {
-          $values['field_tags_recipe'][] = ['target_id' => $tid];
+        if ($tid = $this->getTermId('recipe_category', $tag_id)) {
+          $values['field_recipe_category'][] = ['target_id' => $tid];
         }
       }
     }
@@ -903,12 +903,12 @@ class InstallHelper implements ContainerInjectionInterface {
       case 'footer_promo_block':
         $structured_content = $this->processFooterPromoBlock($content, $langcode);
         break;
+      case 'recipe_category':
       case 'tags':
-      case 'tags_recipe':
+      case 'tags_product':
       case 'tags_news':
       case 'tags_case':
       case 'tags_announcement':
-      case 'tags_product':
         $structured_content = $this->processTerm($content, $bundle_machine_name);
         break;
       default:

@@ -8,23 +8,6 @@
 use Drupal\user\Entity\User;
 use Drupal\shortcut\Entity\Shortcut;
 
-/**
- * Implements hook_requirements().
- */
-// function ImreserCommerce_requirements($phase) {
-//   $requirements = [];
-//   if ($phase == 'runtime') {
-//     $profile = \Drupal::installProfile();
-//     $info = system_get_info('module', $profile);
-//     $requirements['experimental_profile_used'] = [
-//       'title' => t('Experimental installation profile used'),
-//       'value' => $info['name'],
-//       'description' => t('Experimental profiles are provided for testing purposes only. Use at your own risk. To start building a new site, reinstall Drupal and choose a non-experimental profile.'),
-//       'severity' => REQUIREMENT_WARNING,
-//     ];
-//   }
-//   return $requirements;
-// }
 
 /**
  * Implements hook_install().

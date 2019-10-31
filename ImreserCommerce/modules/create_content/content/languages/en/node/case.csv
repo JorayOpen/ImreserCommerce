@@ -1,4 +1,4 @@
-id,title,body,author,slug,image,alt,tags_case
+id,title,body,author,slug,image,alt,tags
 1,case1,case1.html,Holly Foat,case/case1,case1.jpg,case1,"1,2,3"
 2,case2,case2.html,Holly Foat,case/case2,case2.jpg,case2,"1,2,3"
 3,case3,case3.html,Holly Foat,case/case3,case3.jpg,case3,"1,2,3"

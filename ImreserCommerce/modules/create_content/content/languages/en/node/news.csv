@@ -1,4 +1,4 @@
-id,title,body,author,slug,image,alt,tags_news
+id,title,body,author,slug,image,alt,tags
 1,news1,news1.html,Holly Foat,news/news1,news1.jpg,news1,"1,2,3"
 2,news2,news2.html,Holly Foat,news/news2,news2.jpg,news2,"1,2,3"
 3,news3,news3.html,Holly Foat,news/news3,news3.jpg,news3,"1,2,3"

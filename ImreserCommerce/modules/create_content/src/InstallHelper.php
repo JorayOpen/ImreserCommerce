@@ -173,7 +173,7 @@ class InstallHelper implements ContainerInjectionInterface {
    *     2. List of language codes that need to be imported.
    */
   protected function readMultilingualContent($filename) {
-    $create_content_path = $this->module_path . "/create_content/languages/";
+    $create_content_path = $this->module_path . "/content/languages/";
 
     // Get all enabled languages.
     $translated_languages = $this->enabledLanguages;
@@ -390,7 +390,7 @@ class InstallHelper implements ContainerInjectionInterface {
 
     // Set field_image field.
     if (!empty($data['image'])) {
-      $image_path = $this->module_path . '/create_content/images/' . $data['image'];
+      $image_path = $this->module_path . '/content/images/' . $data['image'];
       $values['field_image'] = [
         'target_id' => $this->createFileEntity($image_path),
         'alt' => $data['alt'],
@@ -436,7 +436,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set field_body_recipe field.
     if (!empty($data['body_recipe'])) {
-      $body_recipe_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_recipes/' . $data['body_recipe'];
+      $body_recipe_path = $this->module_path . '/content/languages/' . $langcode . '/body_recipes/' . $data['body_recipe'];
       $body_recipes = file_get_contents($body_recipe_path);
       if ($body_recipes !== FALSE) {
         $values['field_body_recipe'] = [['value' => $body_recipes, 'format' => 'basic_html']];
@@ -477,7 +477,7 @@ class InstallHelper implements ContainerInjectionInterface {
     // Fields mapping starts.
     // Set body field.
     if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_article/' . $data['body'];
+      $body_path = $this->module_path . '/content/languages/' . $langcode . '/body_article/' . $data['body'];
       $body = file_get_contents($body_path);
       if ($body !== FALSE) {
         $values['body'] = [['value' => $body, 'format' => 'basic_html']];
@@ -496,7 +496,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set Image field.
     if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
+      $path = $this->module_path . '/content/images/' . $data['image'];
       $values['field_image'] = [
         'target_id' => $this->createFileEntity($path),
         'alt' => $data['alt'],
@@ -537,7 +537,7 @@ class InstallHelper implements ContainerInjectionInterface {
     // Fields mapping starts.
     // Set body field.
     if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_product/' . $data['body'];
+      $body_path = $this->module_path . '/content/languages/' . $langcode . '/body_product/' . $data['body'];
       $body = file_get_contents($body_path);
       if ($body !== FALSE) {
         $values['body'] = [['value' => $body, 'format' => 'basic_html']];
@@ -556,7 +556,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set Image field.
     if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
+      $path = $this->module_path . '/content/images/' . $data['image'];
       $values['field_image_product'] = [
         'target_id' => $this->createFileEntity($path),
         'alt' => $data['alt'],
@@ -598,7 +598,7 @@ class InstallHelper implements ContainerInjectionInterface {
     // Fields mapping starts.
     // Set body field.
     if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_news/' . $data['body'];
+      $body_path = $this->module_path . '/content/languages/' . $langcode . '/body_news/' . $data['body'];
       $body = file_get_contents($body_path);
       if ($body !== FALSE) {
         $values['body'] = [['value' => $body, 'format' => 'basic_html']];
@@ -617,7 +617,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set Image field.
     if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
+      $path = $this->module_path . '/content/images/' . $data['image'];
       $values['field_image_news'] = [
         'target_id' => $this->createFileEntity($path),
         'alt' => $data['alt'],
@@ -659,7 +659,7 @@ class InstallHelper implements ContainerInjectionInterface {
     // Fields mapping starts.
     // Set body field.
     if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_case/' . $data['body'];
+      $body_path = $this->module_path . '/content/languages/' . $langcode . '/body_case/' . $data['body'];
       $body = file_get_contents($body_path);
       if ($body !== FALSE) {
         $values['body'] = [['value' => $body, 'format' => 'basic_html']];
@@ -678,7 +678,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set Image field.
     if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
+      $path = $this->module_path . '/content/images/' . $data['image'];
       $values['field_image_case'] = [
         'target_id' => $this->createFileEntity($path),
         'alt' => $data['alt'],
@@ -720,7 +720,7 @@ class InstallHelper implements ContainerInjectionInterface {
     // Fields mapping starts.
     // Set body field.
     if (!empty($data['body'])) {
-      $body_path = $this->module_path . '/create_content/languages/' . $langcode . '/body_announcement/' . $data['body'];
+      $body_path = $this->module_path . '/content/languages/' . $langcode . '/body_announcement/' . $data['body'];
       $body = file_get_contents($body_path);
       if ($body !== FALSE) {
         $values['body'] = [['value' => $body, 'format' => 'basic_html']];
@@ -739,7 +739,7 @@ class InstallHelper implements ContainerInjectionInterface {
     }
     // Set Image field.
     if (!empty($data['image'])) {
-      $path = $this->module_path . '/create_content/images/' . $data['image'];
+      $path = $this->module_path . '/content/images/' . $data['image'];
       $values['field_image_announcement'] = [
         'target_id' => $this->createFileEntity($path),
         'alt' => $data['alt'],
@@ -788,7 +788,7 @@ class InstallHelper implements ContainerInjectionInterface {
         'value' => $data['field_summary'],
       ],
       'field_banner_image' => [
-        'target_id' => $this->createFileEntity($this->module_path . '/create_content/images/' . $data['field_banner_image_target_id']),
+        'target_id' => $this->createFileEntity($this->module_path . '/content/images/' . $data['field_banner_image_target_id']),
         'alt' => $data['field_banner_image_alt'],
       ],
     ];
@@ -851,7 +851,7 @@ class InstallHelper implements ContainerInjectionInterface {
         'value' => $data['field_summary'],
       ],
       'field_promo_image' => [
-        'target_id' => $this->createFileEntity($this->module_path . '/create_content/images/' . $data['field_promo_image_target_id']),
+        'target_id' => $this->createFileEntity($this->module_path . '/content/images/' . $data['field_promo_image_target_id']),
         'alt' => $data['field_promo_image_alt'],
       ],
     ];

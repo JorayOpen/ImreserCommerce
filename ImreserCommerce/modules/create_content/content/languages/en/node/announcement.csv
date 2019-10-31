@@ -1,4 +1,4 @@
-id,title,body,author,slug,image,alt,tags
+id,title,body,author,slug,image,alt,tags_announcement
 1,announcement1,announcement1.html,Holly Foat,announcement/announcement1,announcement1.jpg,announcement1,"1,2,3"
 2,announcement2,announcement2.html,Holly Foat,announcement/announcement2,announcement2.jpg,announcement2,"1,2,3"
 3,announcement3,announcement3.html,Holly Foat,announcement/announcement3,announcement3.jpg,announcement3,"1,2,3"

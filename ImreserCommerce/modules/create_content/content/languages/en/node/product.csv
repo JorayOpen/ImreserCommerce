@@ -1,4 +1,4 @@
-id,title,body,author,slug,image,alt,tags
+id,title,body,author,slug,image,alt,tags_product
 1,SSTSH1901-001,SSTSH1901-001.html,Holly Foat,product/SSTSH1901-001,SSTSH1901-001.jpg,SSTSH1901-001,"1,2,3"
 2,SSTSH1901-002,SSTSH1901-002.html,Holly Foat,product/SSTSH1901-002,SSTSH1901-002.jpg,SSTSH1901-002,"1,2,3"
 3,SSTSH1901-003,SSTSH1901-003.html,Holly Foat,product/SSTSH1901-003,SSTSH1901-003.jpg,SSTSH1901-003,"1,2,3"
